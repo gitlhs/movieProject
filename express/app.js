@@ -8,7 +8,25 @@ var indexRouter = require('./routes/index');//引入index.js前台路由文件
 var usersRouter = require('./routes/users'); //引入 users.js用户路由文件
 var admin=require('./routes/admin');
 
+var proxy = require('http-proxy-middleware');
+
 var app = express();
+
+app.use('/api',proxy({
+	target:'http://localhost:8080',
+	changeOrigin:true
+}));
+
+app.use("*", function (req, res, next) {
+    res.header('Access-Control-Allow-Origin', '*'); 
+    res.header("Access-Control-Allow-Headers", "Content-Type,Content-Length, Authorization, Accept,X-Requested-With"); 
+    res.header("Access-Control-Allow-Methods","PUT,POST,GET,DELETE,OPTIONS"); 
+    if (req.method === 'OPTIONS') {
+        res.send(200) 
+    } else {
+        next() 
+    } 
+});
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));

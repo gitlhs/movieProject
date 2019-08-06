@@ -3,10 +3,10 @@
 	<div class="header">
 		<div class="inner">
 		<router-link to="/">
-			<div class="header_menu">主页</div>
+			<div class="header_menu" style="color:white">主页</div>
 		</router-link>
-		<router-link to="/movieList">
-			<div class="header_menu">电影</div>
+		<router-link to="/moviesList">
+			<div class="header_menu" style="color:white">电影</div>
 		</router-link>
 		<div style="clear:both"></div>
 		</div>
@@ -21,8 +21,9 @@
 
 <style type="text/css" scoped>
 .header{
-	background-color: #DDDDDD;
+	background-color: black;
 	height: 60px;
+	margin-bottom: 10px
 }
 .inner{
 	width: 1160px;

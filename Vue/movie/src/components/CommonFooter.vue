@@ -2,7 +2,7 @@
 <template lang="html">
 	<div class="footer">
 		<div class="foot">
-			<p>Vue.js尾部</p>
+			<p class="text">Vue.js尾部</p>
 		</div>
 
 	</div>	
@@ -27,5 +27,8 @@
 	color:white;
 	width: 1160px;
 	margin:0 auto;
+}
+.text{
+	text-align: center
 }
 </style>

@@ -1,4 +1,4 @@
-import Vue from 'vue'
+    import Vue from 'vue'
 import Router from 'vue-router'
 import VueResource from 'vue-resource'
 import axios from 'axios'
@@ -39,7 +39,7 @@ export default new Router({
         }
 
     },
-    {
+    {//浏览器的url打错，捂脸
     	path:'/moviesList',
     	component:moviesList
     },

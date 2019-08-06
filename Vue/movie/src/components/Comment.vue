@@ -3,7 +3,7 @@
 <label>评论</label>
 <hr>
 <div>
-	<li v-for="item in items">xxx评论：xxx</li>
+	<li v-for="item in items"></li>
 </div>
 <div>
 	<textarea v-model="context" placeholder="内容"></textarea>

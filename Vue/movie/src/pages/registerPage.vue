@@ -1,34 +1,34 @@
 <template lang="html">
 <div>
 	<div>
-		<div>
+		<div class="form">
 			<div class="box">
 				<label>用户名</label>
-				<input placeholder="用户名" type="" name="">
+				<input v-model="username" class="edit"  type="" name="">
 			</div>
 
 			<div class="box">
 				<label>输入密码</label>
-				<input placeholder="密码" type="password" name="">
+				<input v-model="password" class="edit" type="password" name="">
 			</div>
 
 			<div class="box">
 				<label>重复输入密码</label>
-				<input placeholder="密码" type="password" name="">
+				<input v-model="rePassword" class="edit" type="password" name="">
 			</div>
 
 			<div class="box">
 				<label>输入邮箱</label>
-				<input placeholder="邮箱" type="" name="">
+				<input v-model="userMail" class="edit" type="" name="">
 			</div>
 
 			<div class="box">
 				<label>输入手机号</label>
-				<input placeholder="手机号" type="" name="">
+				<input v-model="userPhone" class="edit"  type="" name="">
 			</div>
 
 			<div class="box">
-				<button>注册</button>
+				<button @click=userRegister() class="btn">注册</button>
 			</div>
 
 		</div>
@@ -38,11 +38,40 @@
 </template>
 
 <script type="text/javascript">
+	// import VueResource from 'vue-resource'
+	import axios from 'axios'
 
 	export default {
 		data(){
-			return{
-
+			return{	
+				username:'',
+				password:'',
+				userMail:'',
+				userPhone:'',
+				rePassword:''
+			}
+		},
+		methods:{
+			userRegister:function(event){
+				if(this.password!=this.rePassword){
+					alert('两次密码不一致')
+				}else{
+					let sendDate={
+						username:this.username,
+						password:this.password,
+						userMail:this.userMail,
+						userPhone:this.userPhone
+					}
+					axios.post('http://localhost:3000/users/register',sendDate)
+					.then((response)=>{
+						if(response.data.status==1){ //注册失败
+							alert(response.data.message)
+						}else{
+							alert(response.data.message) //成功
+							this.$router.replace('/loginPage')
+						}
+					})
+				}
 			}
 		},
 	}
@@ -52,4 +81,71 @@
 .box{
 
 }
+.form{
+	width: 25%;
+	position: absolute;
+	top:50px;
+	right: 38%;
+}
+.edit{
+    display:block;
+    width:80%;
+    height:35px;
+    line-height: 35px;
+    margin:10px auto;
+    box-sizing: border-box;
+    padding-left:4px;
+    border-radius: 4px;
+    border:1px solid #ccc;  /*重要*/
+    outline:0;
+    box-shadow: 0 0 5px #ccc;/*重要*/
+}
+
+.btn{
+	margin:8px 38px;
+    color: rgb(127, 187, 255);
+
+    display: inline-block;
+
+    padding: 6px 12px;
+    margin-bottom: 0;
+    font-size: 14px;
+    font-weight: 400;
+    line-height: 1.42857143;
+    text-align: center;
+    white-space: nowrap;
+    vertical-align: middle;
+    touch-action: manipulation;
+    cursor: pointer;
+    user-select: none;
+    background-image: none;
+    border: 1px solid grow;
+    border-radius: 4px;
+    outline: none;
+}
+  .btn:hover{
+    background-color: #e6e6e6;
+    /*重要，鼠标移上去变灰色*/
+    border-color: #adadad;
+  }
+  btn:active{
+   -webkit-box-shadow: inset 0 3px 5px rgba(0, 0, 0, .125);
+          box-shadow: inset 0 3px 5px rgba(0, 0, 0, .125); 
+    /*重要，点击后产生凹陷阴影  */
+  }
+  input:focus{
+    box-shadow: 0 0 5px rgb(127, 187, 255);/*重要*/
+    border-color:rgb(127, 187, 255);
+/*输入框聚焦变色*/
+  }
+  label{
+  	margin-left: 35px
+  }
 </style>
+
+
+
+
+
+
+

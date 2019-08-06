@@ -2,17 +2,24 @@
 var express = require('express');
 var router = express.Router();
 var mongoose = require('mongoose');
+var user = require('../models/user');
+var movie = require('../models/movie')
+
 
 //管理需要验证其账号后台管理权限
 //管理admin，添加新的电影
 router.post('/movieAdd',function(req,res,next){
 	if(! req.body.movieMainPage){
-		var movieMainPage = false
+		var movieMainPaged = false
 	}
-	var check = checkAdminPower(req.body.username,req.body.token,req.body.id)
+	//验证管理权限
+	var check = checkAdminPower()
+
 	if(check.error == 0){
 		user.findByUsername(req.body.username,function(err,findUser){
+			console.log(findUser)
 			if(findUser[0].userAdmin && ! findUser[0].userStop){
+				//建立需要存入数据库的数据集结构
 				var saveMovie = new movie({
 					movieName:req.body.movieName,
 					movieImg:req.body.movieImg,
@@ -21,7 +28,7 @@ router.post('/movieAdd',function(req,res,next){
 					movieTime:Data.now(),
 					movieNumSuppose:0,
 					movieNumDownload:0,
-					movieMainPage:movieMainPage,
+					movieMainPage:movieMainPaged,
 				})
 				saveMovie.save(function(err){
 					if(err){
@@ -38,7 +45,7 @@ router.post('/movieAdd',function(req,res,next){
 		res.json({status:1,message:check.message})
 	}
 });
-//删除后台添加的电影条目
+//删除电影条目
 router.post('./movieDel',function(req,res,next){
 	var check = checkAdminPower(req.body.username,req.body.token,req.body.id)
 	if(check.error == 0){
@@ -334,7 +341,7 @@ router.post('/delArticle',function(req,res,next){
 			}
 		})
 	}else{
-		res.json({status:1,message:check.message})
+		res.json({status:1,message:check.message })
 	}
 });
 //新增主页推荐
@@ -408,6 +415,10 @@ router.post('/delRecommend',function(req,res,next){
 	}
 
 });
+
+function checkAdminPower(u_name,u_token,u_id){
+	return true	
+}
 
 module.exports = router;
 

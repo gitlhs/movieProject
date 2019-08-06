@@ -21,7 +21,7 @@ router.get('/showIndex',function(req,res,next){
 
 //显示排行榜 【成功】
 router.get('/showRanking',function(req,res,next){
-	movie.find({movieMainPage:true},function(err,getMovies){
+	movie.find(function(err,getMovies){
 		res.json({status:0,message:'显示排行榜成功',data:getMovies})
 	})
 });
@@ -43,7 +43,7 @@ router.post('/articleDetail',function(req,res,next){
 	})
 });
 
-//show the user imformations 【成功】
+//展示用户信息 【成功】data为数组，回调需要加[0]
 router.post('/showUser',function(req,res,next){
 	if(!req.body.user_id){
 		console.log(req.body)

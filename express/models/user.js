@@ -7,11 +7,10 @@ var user = new mongoose.Schema({
 	password:String,
 	userMail:String,
 	userPhone:String,
-	userAdmin:Boolean,
-	userPower:Number,
-	userStop:Boolean
+	userAdmin:Boolean, //是否管理员
+	userPower:Number, //用户权限等级
+	userStop:Boolean //是否封停
 })
-
 //the searching ways of user
 user.statics.findAll = function(callBack){
 	this.find({},callBack);

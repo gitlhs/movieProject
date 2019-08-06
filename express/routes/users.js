@@ -1,6 +1,7 @@
 var express = require('express');
 var router  = express.Router();
 
+//本文件url皆由/user开头，配置位置在app.js里面
 //
 var user    = require('../models/user');
 var crypto  = require('crypto'); //加密的中间件
@@ -9,7 +10,7 @@ var mail    = require('../models/mail');
 var comment = require('../models/comment');
 const init_token = 'TKL02o';
 
-/* GET users listing. */ //系统默认的users API即其对应的操作
+/* GET users listing. */ //系统默认的users API演示
 router.get('/', function(req, res, next) {
   res.send('respond with a resource');
 });
@@ -52,7 +53,7 @@ router.post('/register',function(req,res,next){
 	//使用用户名查找用户
 	user.findByUsername(req.body.username,function(err,userSave){
 		if(userSave.length!=0){
-			return res.json({status:1,message:"the user has been registed!!!"})
+			return res.json({status:1,message:"注册失败，该用户已存在!!!"})
 		}else{
 			var registerUser = new user({ //实例化一个user模型(注册)，详细查看/models/user.js
 				username:req.body.username,
@@ -69,6 +70,11 @@ router.post('/register',function(req,res,next){
 		}
 	})
 });
+//退出登录
+router.post('/logout',function(req,res,next){
+	delete req.session.user;
+	return res.render('login');
+});
 //提交评论 API 【成功】
 router.post('/postComment',function(req,res,next){
 	if(!req.body.username){
@@ -76,9 +82,6 @@ router.post('/postComment',function(req,res,next){
 	}
 	if(!req.body.movie_id){
 		return res.json({status:1,message:'电影id为空'})
-	}
-	if(! req.body.context){
-		return res.json({status:1,message:'评论内容为空'})
 	}
 	if(! req.body.context){
 		return res.json({status:1,message:'评论内容为空'})
@@ -97,7 +100,7 @@ router.post('/postComment',function(req,res,next){
 		}
 	})
 });
-//the support点赞 API 【成功】 [点赞一直失败， 因为movie表结构的数据类型应该为number,且supportMovie为数组，应该+[0]]
+//点赞 API 【成功】 [点赞一直失败， 因为movie表结构的数据类型应该为number,且supportMovie为数组，应该+[0]]
 router.post('/support',function(req,res,next){
 
 		if(!req.body.movie_id){
@@ -116,7 +119,7 @@ router.post('/support',function(req,res,next){
 					return res.json({status:0,message:'点赞成功'})
 				})
 		})
-	
+		
 });
 //找回密码 API 【成功】
 router.post('/findPassword',function(req,res,next){
@@ -181,7 +184,7 @@ router.post('/findPassword',function(req,res,next){
 	}
 });
 
-//the sendEmail API 
+//the sendEmail API 【成功】
 router.post('/sendEmail',function(req,res,next){
 	if(! req.body.token){
 		res.json({status:1,message:"用户登录状态错误"})
@@ -215,7 +218,7 @@ router.post('/sendEmail',function(req,res,next){
 		res.json({status:1,message:"用户登录错误"})
 	}
 });
-//show Email
+//show Email 【成功】【用户登录错误,callBack写成callback，渣渣. ps：data:sendMail也写错.ps:判定token是否正确的逻辑写错，不能加！，渣渣作者】
 router.post('/showEmail',function(req,res,next){
 	if(! req.body.token){
 		res.json({status:1,message:"用户登录状态错误"})
@@ -223,36 +226,39 @@ router.post('/showEmail',function(req,res,next){
 	if(! req.body.user_id){
 		res.json({status:1,message:"用户登录状态出错"})
 	}
-	if(! req.body.receive){
+	if(! req.body.receive){  //receive获取发送的内容/收到的内容
+		//receive参数为1时是发送的内容，为2时是收到的内容
 		res.json({status:1,message:"参数出错"})
 	}
-	if(! req.body.token == getMD5Password(req.body.user_id)){
-		if(req.body.receive == 1){
+	if(req.body.token == getMD5Password(req.body.user_id)){
+		if(req.body.receive == 1){ //receive为1时获取发送的内容
 			mail.findByFromUserId(req.body.user_id,function(err,sendMail){
-				res.json({status:0,message:"获取成功",data:sengMail})
+				console.log(sendMail)
+				return res.json({status:0,message:"获取成功",data:sendMail})
 			})
-		}else{
+		}else{ //receive为2时获取收到的信内容
 			mail.findByToUserId(req.body.user_id,function(err,receiveMail){
-				res.json({status:0,message:'获取成功',data:receiveMail})
+				return res.json({status:0,message:'获取成功',data:receiveMail})
 			})
 		}
 	}else{
-		res.json({status:1,message:"用户登录错误"})
+		return res.json({status:1,message:"用户登录错误"})
 	}
 });
 
-//download API 【得看movie表】
+//下载 API  【成功】【一开始老无法返回movieDownload,原因：模型文件movie.js的movieDownload写错，我晕】
 router.post('/download',function(req,res,next){
 	if(! req.body.movie_id){
-		res.json({status:1,message:""})
+		return res.json({status:1,message:"id不能为空"})
 	}
 	movie.findById(req.body.movie_id,function(err,supportMovie){
-		movie.update({_id:req.body.movie_id},{movieNumDownload:
-			supportMovie.movieNumDownload + 1},function(err){
+		console.log(supportMovie)
+		movie.updateOne({_id:req.body.movie_id},{movieNumDownload:
+			supportMovie[0].movieNumDownload + 1},function(err){
 				if(err){
-					res.json({status:1,message:"下载失败",data:err})
+					return res.json({status:1,message:"下载失败",data:err})
 				}
-				res.json({status:0,message:'下载成功',data:supportMovie.movieDownload}) //返回下载地址，并自动增加一个下载数
+				return res.json({status:0,message:'下载成功',data:supportMovie[0].movieDownload}) //返回下载地址，并自动增加一个下载数
 			})
 	})
 });
