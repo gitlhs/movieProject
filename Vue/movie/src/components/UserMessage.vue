@@ -1,18 +1,28 @@
 <!-- 用户登录组件 -->
 <template lang="html">
 	<div v-if=!isLogin class="header">
+		<Row>
+			<i-col span="" offset="">
+				<router-link to="/loginPage">
+					<span class="header_menu" ><Icon type="ios-person-outline" size="28"/></Icon>请登录</span><!-- 用户未登录时显示登录按钮 -->
+				</router-link>
 
-		<router-link to="/loginPage">
-			<span class="header_menu" style="color:white">请登录</span><!-- 用户未登录时显示登录按钮 -->
-		</router-link>
+			</i-col>
+		</Row>
+
 	</div>
 
-	<div v-else class="header">
-		<router-link :to="{path:'/userInfo',query:{id:id}}">
-			<span class="header_menu" style="color:white">{{username}}</span>
-		</router-link>
-		<button @click=logout() class="logout" >退出</button>
-	</div>
+<div v-else class="header">
+	<Row>
+		<i-col span="" offset="">
+			<router-link :to="{path:'/userInfo',query:{id:id}}">
+			<span class="header_menu" style="color:white"><Icon type="person"></Icon>您好：{{username}}</span>
+			</router-link>
+			<button @click=logout() class="logout" >退出</button>
+
+		</i-col>
+	</Row>	
+</div>
 </template>	
 
 <script type="text/javascript">
@@ -50,26 +60,31 @@
 
 <style type="text/css" scoped>
 .header{
-float: right;
+/*float: right;
 position: relative;
 right: 130px;
-bottom: 50px;
+bottom: 50px;*/
+background-color: transparent;
+float: right;
+margin-right: 50px;
+color: white !important;
 
 }
+/*.header[data-v-10089542]{
+	background-color: transparent;
+}*/
 .header_menu{
-	color: ;
-
-
+	color: white;
 }
 .logout{
 	margin-left: 10px;
 	margin-bottom: 4px;
+	padding:4px 6px 4px 6px;
 }
 a{
 	text-decoration: none;
 }
 .logout{
-    color: rgb(127, 187, 255);
 
     display: inline-block;
 
@@ -89,13 +104,11 @@ a{
     outline: none;
 }
   .logout:hover{
-    background-color: #e6e6e6;
-    /*重要，鼠标移上去变灰色*/
+    background-color: #e6e6e6;/*重要，鼠标移上去变灰色*/
     border-color: #adadad;
   }
   .logout:active{
    -webkit-box-shadow: inset 0 3px 5px rgba(0, 0, 0, .125);
-          box-shadow: inset 0 3px 5px rgba(0, 0, 0, .125); 
-    /*重要，点击后产生凹陷阴影  */
+          box-shadow: inset 0 3px 5px rgba(0, 0, 0, .125); /*重要，点击后产生凹陷阴影  */
   }
 </style>

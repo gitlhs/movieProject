@@ -1,21 +1,31 @@
 <!-- 定义公用的头部组件 -->
 <template lang="html">
-	<div class="header">
-		<div class="inner">
+	<Menu mode="horizontal" theme='dark' active-name="1">
 		<router-link to="/">
-			<div class="header_menu" style="color:white">主页</div>
+			<MenuItem name='1'>
+				<Icon type="ios-papaer"></Icon>
+					主页
+			</MenuItem>
 		</router-link>
-		<router-link to="/moviesList">
-			<div class="header_menu" style="color:white">电影</div>
+		<router-link to="/movieList">
+			<MenuItem name="2">
+				<Icon type="md-videocam" size="18"/>
+					电影
+			</MenuItem>
 		</router-link>
-		<div style="clear:both"></div>
+		<div class="userMessage">
+		<user-message></user-message>
 		</div>
-	</div>
+	</Menu>
 </template>
 
 <script type="text/javascript">
+//用户模块组件
+import UserMessage from '../components/UserMessage'
 	export default {
-
+		components:{
+			UserMessage
+		}
 	}
 </script>
 

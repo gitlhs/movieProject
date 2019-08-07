@@ -1,7 +1,8 @@
 <template lang="html">
-<div>
+
 	<div>
 		<div class="form">
+			<div>
 			<div class="box">
 				<label>用户名</label>
 				<input v-model="username" class="edit"  type="" name="">
@@ -30,10 +31,10 @@
 			<div class="box">
 				<button @click=userRegister() class="btn">注册</button>
 			</div>
-
+			</div>
 		</div>
 	</div>
-</div>
+
 
 </template>
 
@@ -82,14 +83,18 @@
 
 }
 .form{
-	width: 25%;
+/*	width: 25%;
 	position: absolute;
 	top:50px;
-	right: 38%;
+	right: 38%;*/
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	padding-top: 80px;
 }
 .edit{
     display:block;
-    width:80%;
+    width:250px;
     height:35px;
     line-height: 35px;
     margin:10px auto;
@@ -139,7 +144,7 @@
 /*输入框聚焦变色*/
   }
   label{
-  	margin-left: 35px
+  	margin-left: 15px
   }
 </style>
 

@@ -4,20 +4,43 @@ var router = express.Router();
 var mongoose = require('mongoose');
 var user = require('../models/user');
 var movie = require('../models/movie')
+var crypto  = require('crypto'); //加密的中间件
+const init_token = 'TKL02o';
 
 
 //管理需要验证其账号后台管理权限
 //管理admin，添加新的电影
 router.post('/movieAdd',function(req,res,next){
-	if(! req.body.movieMainPage){
-		var movieMainPaged = false
+	//console.log(req.body)
+	if(!req.body.username){
+		return res.json({status:1,message:'用户名为空'})
 	}
-	//验证管理权限
-	var check = checkAdminPower()
+	if(!req.body.token){
+		return res.json({status:1,message:'登录出错'})
+	}
+	if(!req.body.id){
+		res.json({status:1,message:'用户传递错误'})
+	}
+	if(!req.body.movieName){
+		return res.json({status:1,message:'电影名称为空'})
+	}
+	if(!req.body.movieImg){
+		return res.json({status:1,message:'电影图片为空'})
+	}
+	if(!req.body.movieDownload){
+		return res.json({status:1,message:'电影下载地址为空'})
+	}
+
+
+	if(! req.body.movieMainPage){
+		var movieMainPage = false
+	}
+	//验证管理权限(验证token值和_id值的对应性，获得用户信息后，对用户后台权限进行验证，如果权限符合进行操作增加，反之直接返回错误信息)
+	var check = checkAdminPower(req.body.username,       req.body.token,        req.body.id)
 
 	if(check.error == 0){
 		user.findByUsername(req.body.username,function(err,findUser){
-			console.log(findUser)
+
 			if(findUser[0].userAdmin && ! findUser[0].userStop){
 				//建立需要存入数据库的数据集结构
 				var saveMovie = new movie({
@@ -28,23 +51,37 @@ router.post('/movieAdd',function(req,res,next){
 					movieTime:Data.now(),
 					movieNumSuppose:0,
 					movieNumDownload:0,
-					movieMainPage:movieMainPaged,
+					movieMainPage:movieMainPage,
 				})
 				saveMovie.save(function(err){
 					if(err){
-						res.json({status:1,message:err})
+						return res.json({status:1,message:err})
 					}else{
-						res.json({status:0,message:"添加成功"})
+						return res.json({status:0,message:"添加成功"})
 					}
 				})
 			}else{
-				res.json({error:1,message:"用户没有获得权限或者已经停用"})
+				return res.json({error:1,message:"用户没有获得权限或者已经停用"})
 			}
 		})
 	} else{
-		res.json({status:1,message:check.message})
+		return res.json({status:1,message:check.message})
 	}
 });
+//the login API 【成功】
+// router.post('/login',function(req,res,next){
+// 		user.findUserLogin(req.body.username,req.body.password,function(err,userSave){
+// 			console.log(userSave)
+// 			if(userSave.length!=0){
+// 				var token_after = getMD5Password(userSave[0]._id) 
+// 				//用户名和密码正确时提示登录成功并且返回一个登录的Token值
+// 				res.json({status:0,data:{token:token_after,user:userSave},message:'user logining success!!'})
+// 			}else{
+// 				res.json({status:1,message:"username  or password error"})
+// 			}
+// 		})
+	
+// });
 //删除电影条目
 router.post('./movieDel',function(req,res,next){
 	var check = checkAdminPower(req.body.username,req.body.token,req.body.id)
@@ -415,11 +452,50 @@ router.post('/delRecommend',function(req,res,next){
 	}
 
 });
-
-function checkAdminPower(u_name,u_token,u_id){
-	return true	
+function getMD5Password(id){
+	var md5 = crypto.createHash('md5');
+	var token_before = id +init_token 
+		//res.json(userSave[0]._id)
+		return md5.update(token_before).digest('hex')
 }
 
+function checkAdminPower(u_name,u_token,u_id){
+
+	var ret  = {'error':1, 'message':'没有权限'}
+
+	user.findById(u_id,function(err,userSave){
+
+			//判断用户名跟数据库里的用户名是否一致
+			if(u_name !== userSave[0].username){
+				//返回error信息 :id不正确
+				return ret
+			}
+			//封装数据库里的用户id为一个token
+			var token_db = getMD5Password(userSave[0]._id)
+			//判断数据库id的token跟用户上传的token是否一致
+			if(u_token !== token_db){
+				//返回error信息:token不正确
+				return ret
+			}
+			//判断用户是否为管理员
+			if(userSave[0].userAdmin == false){
+				//返回信息：不是管理员
+				return ret
+			}
+			//用户身份确认，可以进行电影条目的增删操作
+
+			 ret.error = 0
+
+			 ret.message = ''
+
+	})
+
+	 return ret
+
+};
+
+
+	
 module.exports = router;
 
 

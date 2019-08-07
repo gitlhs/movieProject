@@ -33,9 +33,10 @@ user.statics.findUserPassword = function(name,mail,phone,callBack){
 
 user.statics.findById = function (u_id,callBack) {
 	// 
-	this.find({_id:u_id},callBack); 
+	this.find({_id:u_id},callBack);  //find方法类似于sql中的select()
 	//xxxx这里的_id跟数据库里的字段一样，不能写错！！！！
 };
+
 var userModel = mongoose.model('user',user);
 module.exports = userModel;
 

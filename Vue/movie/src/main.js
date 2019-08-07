@@ -4,8 +4,12 @@ import Vue from 'vue'
 import App from './App'
 import router from './router'
 import axios from 'axios'
+import iView from 'iview';
+import 'iview/dist/styles/iview.css';
 
-Vue.use(axios)
+
+Vue.use(axios);
+Vue.use(iView);
 
 Vue.prototype.$axios = axios;
 

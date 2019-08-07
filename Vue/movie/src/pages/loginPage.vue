@@ -5,16 +5,16 @@
 			<div class="box"></div>
 			<label>用户名：</label>
 			<input v-model="username" class="edit" type="" name="">
-		</div>
-		<div class="btn_box">
+
 			<label>密码：</label> 
 			<input v-model="password" class="edit" type="password" name="">
-		</div>
-		<div class="box">
-			<button v-on:click=userLogin() class="btn">登录</button>
-			<button v-on:click=userRegister() class="btn">注册</button>
-			<a @click=findBackPassword() href="#">忘记密码</a>
-			<!-- ！！！链接的href不能乱填，填为空也会自动导向主页 -->
+		
+			<div class="box">
+				<button v-on:click=userLogin() class="btn">登录</button>
+				<button v-on:click=userRegister() class="btn">注册</button>
+				<a @click=findBackPassword() href="#">忘记密码</a>
+				<!-- ！！！链接的href不能乱填，填为空也会自动导向主页 -->
+			</div>
 		</div>
 	</div>
 </div>
@@ -65,13 +65,17 @@ import VueResource from 'vue-resource'
 	
 }
 .loginPage{
-position: absolute;
+/*position: absolute;
 top:150px;
-left:38%
+left:38%*/
+display: flex;
+justify-content: center;
+align-items: center;
+padding-top: 100px;
 }
 .edit{
     display:block;
-    width:80%;
+    width:280px;
     height:35px;
     line-height: 35px;
     margin:10px auto;
@@ -82,9 +86,10 @@ left:38%
     outline:0;
     box-shadow: 0 0 5px #ccc;/*重要*/
 }
-
+.btn_box{
+}
 .btn{
-	margin:8px 38px;
+	margin:8px 20px;
     color: rgb(127, 187, 255);
 
     display: inline-block;
@@ -121,6 +126,6 @@ left:38%
 /*输入框聚焦变色*/
   }
   label{
-  	margin-left: 35px
+  	margin-left: 1px
   }
 </style>

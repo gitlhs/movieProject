@@ -3,28 +3,69 @@
 	<div>
 		<movie-index-header></movie-index-header><!-- 展示引入的header组件 -->
 	</div>
-	<div class="userMessage">
+	<div class="block"></div>
+<!-- 	<div class="userMessage">
 		<user-message></user-message>
-	</div>
+	</div> -->
+
+
+
 	<div class="contentPic">
-		<index-header-pic v-for="item in headerItems" :key="item._id" :recommendTitle="item.recommendTitle"></index-header-pic><!-- 展示引入的大图组件 -->
-	</div>
+		<index-header-pic v-for="item in headerItems" :key="item._id" :recommendTitle="item.recommendTitle"></index-header-pic>  <!-- 展示引入的大图组件 -->
+	</div> 
+
+
+
+
 	<div class="contentMain">
 
-		
-		<div class="contentLeft"><!-- 电影列表组件 -->
-			<ul class="cont-ul">
-				<movies-list v-for="item in movieItems" :key="item._id" :id="item._id" :movieName="item.movieName" :movieTime="item.movieTime"></movies-list><!-- 展示引入的MovieList组件 -->
-			</ul>
-		</div>
+		<Row>
+			<i-col span="11	" offset="1">
+				<Card>
+					<p slot="title">
+						<Icon type="ios-film-outline" size="18"></Icon>
+						电影
+					</p>
+					<ul class="cont-ul">
+						<movies-list></movies-list>
+					</ul>
+				</Card>
+			</i-col>
 
-	
-		<div class="contentRight"> <!-- 新闻列表组件 -->
-			<ul class="cont-ul">
-				<news-list v-for="item in newsItems" :key="item._id" :id="item._id" :articleTitle="item.articleTitle" :articleTime="item.articleTime"></news-list><!-- 展示引入的news-list组件 -->
-			</ul>
+
+			<i-col span="11" offset="1">
+				<Card>
+					<p slot="title">
+						<Icon type="ios-chatbubbles-outline" size="18"/>
+						短评
+					</p>
+					<ul class="">
+						<news-list v-for="item in newsItems" :key="item._id" :id="item._id" :articleTitle="item.articleTitle" :articleTime="item.articleTime">
+						</news-list>
+					</ul>
+				</Card>
+
+			</i-col>
+
+		</Row>
+<!-- 		<div class="contentLeft"> -->
+			<!-- 电影列表组件 -->
+			<!-- <ul class="cont-ul"> -->
+
+			<!-- 	<movies-list v-for="item in movieItems" :key="item._id" :id="item._id" :movieName="item.movieName" :movieTime="item.movieTime"></movies-list> -->
+				<!-- 展示引入的MovieList组件 -->
+<!-- 			</ul>
+		</div> -->
+
+<!-- 	
+		<div class="contentRight"> -->
+		 <!-- 新闻列表组件 -->
+<!-- 			<ul class="cont-ul">
+				<news-list v-for="item in newsItems" :key="item._id" :id="item._id" :articleTitle="item.articleTitle" :articleTime="item.articleTime"></news-list> -->
+				<!-- 展示引入的news-list组件 -->
+<!-- 			</ul>
 		</div>
-		<div style="clear:both"></div>
+		<div style="clear:both"></div> -->
 		
 
 	</div>
@@ -37,7 +78,7 @@
 
 <script type="text/javascript">
 
-// import axios from 'axios'
+import axios from 'axios'
 import VueResource from 'vue-resource'
 //header组件
 import MovieIndexHeader from '../components/MovieIndexHeader'
@@ -114,10 +155,14 @@ import UserMessage from '../components/UserMessage'
 	}
 </script>
 
-<style type="text/css" scoped>
+<style type="text/css" scoped>x
+.block{
+	height: 10px;
+	width: 10px;
+}
 .contentMain {
-	width: 1160px;
-	margin:0 auto;
+/*	width: 1160px;
+	margin:0 auto;*/
 }
 .contentLeft{
 	display: inline-block;
@@ -128,6 +173,8 @@ import UserMessage from '../components/UserMessage'
 	width:306px;
 	float:right;
 }
-
+ul{
+	list-style: none;
+}
 
 </style>
