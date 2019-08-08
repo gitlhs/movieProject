@@ -1,4 +1,3 @@
-ajax请求api：/movie/detail
 <template lang="html">
 <div class="container">
 	<div>
@@ -8,6 +7,7 @@ ajax请求api：/movie/detail
 	<div class="contentMain">
 		<div class="">
 			<h1>{{detail.movieName}}</h1>
+
 			<div class="viewNum">下载次数：{{detail.movieNumDownload}}</div>
 		</div>
 
@@ -20,11 +20,13 @@ ajax请求api：/movie/detail
 		</div>
 		<div v-on:click="support()" class="btnPosition"></div>
 
-		<div class="SupportBtn">点赞数为：<div>{{detail.movieNumsuppose}}</div></div>
-	</div>
-	<comment v-bind:movie_id="movie_id"></comment>
+		<div class="SupportBtn">点赞数为：
+            <div>{{detail.movieNumsuppose}}</div>
+        </div>
+	
+	<comment :movie_id="detail.movie_id"></comment>
 
-
+    </div>
 	<div>
 		<div>
 			<common-footer></common-footer>
@@ -103,5 +105,7 @@ ajax请求api：/movie/detail
 </script>
 
 <style type="text/css" scoped>
-
+.contentMain{
+	min-height: 600px;
+}
 </style>

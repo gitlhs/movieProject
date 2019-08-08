@@ -3,21 +3,24 @@
 	<div>
 		<movie-index-header></movie-index-header><!-- 展示引入的header组件 -->
 	</div>
-	<div class="block"></div>
 <!-- 	<div class="userMessage">
 		<user-message></user-message>
 	</div> -->
-
-
-
-	<div class="contentPic">
-		<index-header-pic v-for="item in headerItems" :key="item._id" :recommendTitle="item.recommendTitle"></index-header-pic>  <!-- 展示引入的大图组件 -->
-	</div> 
-
-
-
-
 	<div class="contentMain">
+	<Row>
+		<i-col span="24" offset="">
+			<div class="contentPic">
+				<index-header-pic v-for="item in headerItems" :key="item._id" :recommendTitle="item.recommendTitle"></index-header-pic>  <!-- 展示引入的大图组件 -->
+				</div> 
+		</i-col>
+	</Row>
+
+	
+
+
+
+
+	
 
 		<Row>
 			<i-col span="11	" offset="1">
@@ -48,28 +51,14 @@
 			</i-col>
 
 		</Row>
-<!-- 		<div class="contentLeft"> -->
-			<!-- 电影列表组件 -->
-			<!-- <ul class="cont-ul"> -->
-
-			<!-- 	<movies-list v-for="item in movieItems" :key="item._id" :id="item._id" :movieName="item.movieName" :movieTime="item.movieTime"></movies-list> -->
-				<!-- 展示引入的MovieList组件 -->
-<!-- 			</ul>
-		</div> -->
-
-<!-- 	
-		<div class="contentRight"> -->
-		 <!-- 新闻列表组件 -->
-<!-- 			<ul class="cont-ul">
-				<news-list v-for="item in newsItems" :key="item._id" :id="item._id" :articleTitle="item.articleTitle" :articleTime="item.articleTime"></news-list> -->
-				<!-- 展示引入的news-list组件 -->
-<!-- 			</ul>
-		</div>
-		<div style="clear:both"></div> -->
-		
+		<Row>
+			<i-col span="24">
+				<common-footer></common-footer>
+			</i-col>		
+		</Row>
 
 	</div>
-	<common-footer></common-footer><!-- 展示引入的footer组件 -->
+	
 
 
 </div>
@@ -155,14 +144,12 @@ import UserMessage from '../components/UserMessage'
 	}
 </script>
 
-<style type="text/css" scoped>x
-.block{
-	height: 10px;
-	width: 10px;
-}
+<style type="text/css" scoped>
 .contentMain {
 /*	width: 1160px;
 	margin:0 auto;*/
+min-height: 100 %;
+margin-bottom: -60px;
 }
 .contentLeft{
 	display: inline-block;

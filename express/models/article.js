@@ -4,7 +4,7 @@ var mongoose = require('../common/db');
 var article = new mongoose.Schema({
 	articleTitle:String,
 	articleContext:String,
-	articleTime:String
+	articleTime:Date
 })
 
 //通过id查找文章

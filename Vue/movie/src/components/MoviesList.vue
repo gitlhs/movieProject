@@ -26,8 +26,7 @@
 
 <style type="text/css" scoped>
 .movieList{
-	height: 100px;
-	color:#2db7f5;
+
 }
 
 </style>

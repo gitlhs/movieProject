@@ -86,6 +86,11 @@ padding-top: 100px;
     outline:0;
     box-shadow: 0 0 5px #ccc;/*重要*/
 }
+  input:focus{
+    box-shadow: 0 0 5px rgb(127, 187, 255);/*重要*/
+    border-color:rgb(127, 187, 255);
+/*输入框聚焦变色*/
+  }
 .btn_box{
 }
 .btn{
@@ -119,11 +124,6 @@ padding-top: 100px;
    -webkit-box-shadow: inset 0 3px 5px rgba(0, 0, 0, .125);
           box-shadow: inset 0 3px 5px rgba(0, 0, 0, .125); 
     /*重要，点击后产生凹陷阴影  */
-  }
-  input:focus{
-    box-shadow: 0 0 5px rgb(127, 187, 255);/*重要*/
-    border-color:rgb(127, 187, 255);
-/*输入框聚焦变色*/
   }
   label{
   	margin-left: 1px

@@ -70,10 +70,10 @@ router.post('/register',function(req,res,next){
 		}
 	})
 });
-//退出登录
+//退出登录 [清除用户session]
 router.post('/logout',function(req,res,next){
 	delete req.session.user;
-	return res.render('login');
+    //清除用户session
 });
 //提交评论 API 【成功】
 router.post('/postComment',function(req,res,next){
@@ -266,6 +266,7 @@ router.post('/download',function(req,res,next){
 function getMD5Password(id){
 	var md5 = crypto.createHash('md5');
 	var token_before = id +init_token 
+		//const init_token = 'TKL02o';
 		//res.json(userSave[0]._id)
 		return md5.update(token_before).digest('hex')
 }

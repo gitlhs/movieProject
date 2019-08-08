@@ -13,12 +13,7 @@
 				返回主页
 		</MenuItem>
 	</router-link>
-<!-- 	<router-link to="/movieList">
-		<MenuItem name="2">
-			<Icon type="ios-people"></Icon>
-				电影
-		</MenuItem>
-	</router-link> -->
+
 	<div class="userMessage">
 	<user-message></user-message>
 	</div>
@@ -33,10 +28,12 @@
 
 <style type="text/css" scoped>
 .footer{
-	position: absolute;
+	position: relative;
 	bottom: 0;
 	width: 100%;
 	height: 60px;
+	margin-top: 10px;
+
 }
 
 .foot{

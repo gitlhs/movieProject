@@ -14,6 +14,7 @@ import moviesList from '../pages/moviesList'
 import registerPage from '../pages/registerPage'
 import findPassword from '../pages/findPassword'
 import userInfo from '../pages/userInfo'
+import newDetail from '../pages/newDetail'
 
 
 
@@ -40,7 +41,7 @@ export default new Router({
 
     },
     {//浏览器的url打错，捂脸
-    	path:'/moviesList',
+    	path:'/movieList',
     	component:moviesList
     },
     {
@@ -62,6 +63,10 @@ export default new Router({
     {
     	path:'/userInfo',
     	component:userInfo
+    },
+    {
+        path:'/newDetail',
+        component:newDetail
     }
 
 

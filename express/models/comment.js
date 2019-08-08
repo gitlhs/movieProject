@@ -13,8 +13,8 @@ comment.statics.findByMovieId = function(m_id,callBack){
 	this.find({movie_id:m_id,check:true},callBack);
 };
 
-comment.statics.findAll = function(movieMainPage,callBack){
-	this.find({},callBack);
+comment.statics.findAll = function(callBack){
+	this.find(callBack);
 };
 
 var commentModel = mongoose.model('comment',comment);
