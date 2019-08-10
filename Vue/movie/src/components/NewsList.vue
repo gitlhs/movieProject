@@ -1,12 +1,12 @@
 <template lang="html">
-	<li class="goods-list">
+	<div class="goods-list">
 		<div class="newsList">
 			<router-link :to="{path:'/newDetail',query:{id:id}}" class="goods-list-link">
 				{{articleTitle}}
-				{{articleTimeShow}}
+		<!-- 	{{articleTimeShow}} -->
 			</router-link>
 		</div>
-	</li>
+	</div>
 </template>
 
 <script type="text/javascript">
@@ -28,6 +28,9 @@
 
 <style type="text/css" scoped>
 .newsList{
-
+	 width: 282px;
+	 height: 28px;
+	 margin-bottom: 10px;
+	 font-size: 16px;
 }
 </style>

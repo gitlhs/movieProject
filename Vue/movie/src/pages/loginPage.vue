@@ -1,19 +1,23 @@
 <template lang="html">
 <div class="loginPage">
 	<div>
+		<movie-index-header></movie-index-header><!-- 展示引入的header组件 -->
+	</div>
+	<div>
 		<div class="btn_box">
-			<div class="box"></div>
-			<label>用户名：</label>
-			<input v-model="username" class="edit" type="" name="">
+			<div class="form">
+						<label>用户名：</label>
+						<input v-model="username" class="edit" type="" name="">
 
-			<label>密码：</label> 
-			<input v-model="password" class="edit" type="password" name="">
-		
-			<div class="box">
-				<button v-on:click=userLogin() class="btn">登录</button>
-				<button v-on:click=userRegister() class="btn">注册</button>
-				<a @click=findBackPassword() href="#">忘记密码</a>
-				<!-- ！！！链接的href不能乱填，填为空也会自动导向主页 -->
+						<label>密码：</label> 
+						<input v-model="password" class="edit" type="password" name="">
+					
+						<div class="box">
+							<button v-on:click=userLogin() class="btn">登录</button>
+							<button v-on:click=userRegister() class="btn">注册</button>
+							<a @click=findBackPassword() href="#">忘记密码</a>
+							<!-- ！！！链接的href不能乱填，填为空也会自动导向主页 -->
+						</div>
 			</div>
 		</div>
 	</div>
@@ -22,6 +26,8 @@
 </template>
 
 <script type="text/javascript">
+//header组件
+import MovieIndexHeader from '../components/MovieIndexHeader'
 import VueResource from 'vue-resource'
 	export default {
 		data(){
@@ -29,6 +35,9 @@ import VueResource from 'vue-resource'
 				username:'',
 				password:''
 			}
+		},
+		components:{
+			MovieIndexHeader,
 		},
 		methods:{
 			userLogin:function(event){
@@ -61,17 +70,23 @@ import VueResource from 'vue-resource'
 </script>
 
 <style type="text/css" scoped>
-.box{
+.form{
+	margin-top: 100px;
+	width: 300px;
 	
 }
 .loginPage{
 /*position: absolute;
 top:150px;
 left:38%*/
-display: flex;
+/*display: flex;
 justify-content: center;
 align-items: center;
-padding-top: 100px;
+padding-top: 100px;*/
+}
+label{
+	position: relative;
+	left: 12px;
 }
 .edit{
     display:block;
@@ -92,6 +107,8 @@ padding-top: 100px;
 /*输入框聚焦变色*/
   }
 .btn_box{
+	width: 300px;
+	margin:30px auto;
 }
 .btn{
 	margin:8px 20px;

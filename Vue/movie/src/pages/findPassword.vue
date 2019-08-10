@@ -1,7 +1,10 @@
 <template lang="html">
 
-	<div class="form">
-		<div>
+	<div>
+	<div>
+		<movie-index-header></movie-index-header><!-- 展示引入的header组件 -->
+	</div>
+		<div class="form">
 			<div class="box">
 				<label>用户名</label>
 				<input v-model="username" class="edit"  type="" name="">
@@ -20,15 +23,16 @@
 			<div class="box1">
 				<button @click=checkUser() class="btn">找回密码</button>
 			</div>
+				<div v-show="showRePassword">
+					<div class="box">
+						<label>输入新密码</label>
+						<input v-model="repassword" class="edit"  type="password" name="">
+					</div>
 
-			<div class="box">
-				<label>输入新密码</label>
-				<input v-model="repassword" class="edit"  type="password" name="">
-			</div>
-
-			<div class="box1">
-				<button @click=changeUserPassword() class="btn">修改密码</button>
-			</div>	
+					<div class="box1">
+						<button @click=changeUserPassword() class="btn">修改密码</button>
+					</div>
+				</div>	
 		</div>
 		
 	</div>
@@ -38,7 +42,12 @@
 
 <script type="text/javascript">
 import VueResource from 'vue-resource'
+//header组件
+import MovieIndexHeader from '../components/MovieIndexHeader'
 	export default {
+		components:{
+			MovieIndexHeader,
+		},
 		data(){
 			return{
 				userMail:'',
@@ -84,14 +93,20 @@ import VueResource from 'vue-resource'
 margin:5px 0 20px 0;
 }
 .form{
+	width: 300px;
 /*	width: 25%;
 	position: absolute;
 	top:50px;
 	right: 38%;*/
-	display: flex;
+/*	display: flex;
 	justify-content: center;
-	align-items: center;
+	align-items: center;*/
 	padding-top: 80px;
+	margin:0 auto;
+}
+label{
+	position: relative;
+	left: 20px;
 }
 .edit{
     display:block;

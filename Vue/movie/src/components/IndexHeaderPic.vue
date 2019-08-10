@@ -1,14 +1,16 @@
-<!-- 主页大图 -->
-<template lang="html">
-	<div class="headerPic">
+<!-- 主页大图  -->
+
+<!-- <template lang="html">
+	<div class="headerPic"> -->
 <!-- 		<div>
 			<p class="imgTitle">{{recommendTitle}}</p>
 		</div> -->
-			<a>
+<!-- 			<a :href="recommendSrc">
 				<img :src=imgUrl class="headerImg">
-			</a>
+			</a> -->
+<!-- 此组件暂时作废 -->
 
-	</div>
+<!-- 	</div>
 </template>
 
 <script type="text/javascript">
@@ -16,7 +18,6 @@
 		props:['recommendSrc','recommendImg','recommendTitle'],
 		data (){
 			return{
-				imgUrl:'https://image14.m1905.cn/uploadfile/2019/0807/thumb_1_1380_460_20190807020556393759.jpg'
 			}
 		}
  

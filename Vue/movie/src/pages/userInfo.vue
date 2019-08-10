@@ -5,8 +5,7 @@
 			<movie-index-header></movie-index-header>
 		</div>
 
-<Row class="content">
-	<i-col offset="5">
+<div class="content">
 			<div class="info">
 				<div class="box">
 					<h2>用户名：{{detail.username}}</h2>
@@ -39,7 +38,7 @@
 					<button @click=changeUserPassword() class="btn">提交修改</button>
 				</div>
 			</div>
-			<Divider />
+			 <el-divider></el-divider>
 			<div>
 				<router-link to="/sendEmail">
 					<button class="btn">站内邮件</button>
@@ -47,8 +46,8 @@
 				<Icon type="ios-mail-open-outline" size="32" />
 
 			</div>
-	</i-col>
-</Row>
+	
+</div>
 	<common-footer></common-footer>
 
 </div>
@@ -132,6 +131,7 @@ import UserMessage from '../components/UserMessage'
 }
 .content{
 	min-height: 590px;
+	margin:0 300px 0 300px;
 }
 .info{
 	margin-top: 25px;

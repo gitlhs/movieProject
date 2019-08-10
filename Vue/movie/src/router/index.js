@@ -1,4 +1,4 @@
-    import Vue from 'vue'
+import Vue from 'vue'
 import Router from 'vue-router'
 import VueResource from 'vue-resource'
 import axios from 'axios'
@@ -15,7 +15,7 @@ import registerPage from '../pages/registerPage'
 import findPassword from '../pages/findPassword'
 import userInfo from '../pages/userInfo'
 import newDetail from '../pages/newDetail'
-
+import sendEmail from '../pages/sendEmail'
 
 
 Vue.use(Router)
@@ -67,6 +67,10 @@ export default new Router({
     {
         path:'/newDetail',
         component:newDetail
+    },
+    {
+        path:'/sendEmail',
+        component:sendEmail
     }
 
 

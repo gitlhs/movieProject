@@ -1,23 +1,15 @@
 <!-- 公用的footer组件 -->
 <template lang="html">
-<!-- 	<div class="footer">
-		<div class="foot">
-			<p class="text">Vue.js尾部</p>
-		</div>
-
-	</div>	 -->
-<Menu class="footer" mode="horizontal" theme='dark' active-name="1">
-	<router-link to="/">
-		<MenuItem name='1'>
-			<Icon type="ios-papaer"></Icon>
-				返回主页
-		</MenuItem>
-	</router-link>
-
-	<div class="userMessage">
-	<user-message></user-message>
-	</div>
-</Menu>
+<el-menu
+  class="el-menu-demo"
+  mode="horizontal"
+  @select="handleSelect"
+  background-color="#515a6e"
+  text-color="#fff" router>
+	<el-menu-item index="/">返回主页</el-menu-item><!-- 注意el-menu标签打开router属性，将default-active绑定为$route.path -->
+  <user-message></user-message>
+		
+</el-menu>
 </template>
 
 <script type="text/javascript">
@@ -33,9 +25,7 @@
 	width: 100%;
 	height: 60px;
 	margin-top: 10px;
-
 }
-
 .foot{
 	color:white;
 	width: 1160px;

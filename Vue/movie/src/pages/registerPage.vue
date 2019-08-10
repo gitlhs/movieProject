@@ -1,6 +1,9 @@
 <template lang="html">
 
+<div>
 	<div>
+		<movie-index-header></movie-index-header><!-- 展示引入的header组件 -->
+	</div>
 		<div class="form">
 			<div>
 			<div class="box">
@@ -41,8 +44,13 @@
 <script type="text/javascript">
 	// import VueResource from 'vue-resource'
 	import axios from 'axios'
+	//header组件
+	import MovieIndexHeader from '../components/MovieIndexHeader'
 
 	export default {
+		components:{
+			MovieIndexHeader,
+		},
 		data(){
 			return{	
 				username:'',
@@ -90,7 +98,7 @@
 	display: flex;
 	justify-content: center;
 	align-items: center;
-	padding-top: 80px;
+	padding-top: 60px;
 }
 .edit{
     display:block;

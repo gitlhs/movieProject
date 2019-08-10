@@ -1,28 +1,27 @@
 <!-- 用户登录组件 -->
 <template lang="html">
 	<div v-if=!isLogin class="header">
-		<Row>
-			<i-col span="" offset="">
+<!-- 		<Row>
+			<i-col span="" offset=""> -->
 				<router-link to="/loginPage">
+
 					<span class="header_menu" ><Icon type="ios-person-outline" size="28"/></Icon>请登录</span><!-- 用户未登录时显示登录按钮 -->
 				</router-link>
-
-			</i-col>
-		</Row>
-
+<!-- 			</i-col>
+		</Row> -->
 	</div>
 
-<div v-else class="header">
-	<Row>
-		<i-col span="" offset="">
-			<router-link :to="{path:'/userInfo',query:{id:id}}">
-			<span class="header_menu" style="color:white"><Icon type="person"></Icon>您好：{{username}}</span>
-			</router-link>
-			<button @click=logout() class="logout" >退出</button>
-
-		</i-col>
-	</Row>	
-</div>
+	<div v-else class="header">
+	<!-- 	<Row>
+			<i-col span="" offset=""> -->
+				
+				<router-link :to="{path:'/userInfo',query:{id:id}}">
+				<span class="header_menu" style="color:white"><Icon type="person"></Icon>您好：{{username}}</span>
+				</router-link>
+				<button @click=logout() class="logout" >退出</button>
+	<!-- 		</i-col>
+		</Row>	 -->
+	</div>
 </template>	
 
 <script type="text/javascript">
@@ -68,17 +67,17 @@ background-color: transparent;
 float: right;
 margin-right: 50px;
 color: white !important;
-
+margin-top: 15px;
 }
 /*.header[data-v-10089542]{
 	background-color: transparent;
 }*/
 .header_menu{
 	color: white;
+	font-size: 14px;
 }
 .logout{
 	margin-left: 10px;
-	margin-bottom: 4px;
 	padding:4px 6px 4px 6px;
 }
 a{

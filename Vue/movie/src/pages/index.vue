@@ -3,70 +3,68 @@
 	<div>
 		<movie-index-header></movie-index-header><!-- 展示引入的header组件 -->
 	</div>
-<!-- 	<div class="userMessage">
-		<user-message></user-message>
-	</div> -->
-	<div class="contentMain">
-	<Row>
-		<i-col span="24" offset="">
-			<div class="contentPic">
-				<index-header-pic v-for="item in headerItems" :key="item._id" :recommendTitle="item.recommendTitle"></index-header-pic>  <!-- 展示引入的大图组件 -->
-				</div> 
-		</i-col>
-	</Row>
+		<!-- banner -->
+	  <div class="block">
+	    <span class="demonstration"> &nbsp</span>
+	    <el-carousel  height="460px">
+	      <el-carousel-item v-for="imgUrl in recommendSrc" >
+	        <a 	href="#">
+					<img :src=imgUrl class="headerImg">
+			</a>
+	      </el-carousel-item>
+	    </el-carousel>
+	  </div>
 
-	
+		<br>
+		<br>
 
-
-
-
-	
-
-		<Row>
-			<i-col span="11	" offset="1">
-				<Card>
-					<p slot="title">
+		<div class="" ass="contentMain">	
+			<div class="inner">
+				<!-- movieList -->
+					<div class=contentLeft>
+				  		<h2 slot="title">
 						<Icon type="ios-film-outline" size="18"></Icon>
-						电影
-					</p>
-					<ul class="cont-ul">
-						<movies-list></movies-list>
-					</ul>
-				</Card>
-			</i-col>
-
-
-			<i-col span="11" offset="1">
-				<Card>
-					<p slot="title">
+							电影推荐
+						</h2>
+						<div class="movie-list">
+							<div class="movie-card">
+								<!-- //这里使用slice可以限制v-for的遍历数量 -->
+								<movies-list  v-for="item in movieItems.slice(0,10)" :key="item._id" :id="item._id" :movieName="item.movieName" :movieTime="item.movieTime" :movieImg="item.movieImg">
+								</movies-list>
+							</div>
+						</div>
+					</div>
+				<!-- movieComment -->
+					<div class="contentRight">
+				  		<h2 slot="title">
 						<Icon type="ios-chatbubbles-outline" size="18"/>
-						短评
-					</p>
-					<ul class="">
-						<news-list v-for="item in newsItems" :key="item._id" :id="item._id" :articleTitle="item.articleTitle" :articleTime="item.articleTime">
-						</news-list>
-					</ul>
-				</Card>
+								最新短评
+						</h2>
+						<div class="data-list">
+							<news-list v-for="item in newsItems.slice(0,12)" :key="item._id" :id="item._id" :articleTitle="item.articleTitle" :articleTime="item.articleTime">
+							</news-list>
+						</div>
+			  		</div>
 
-			</i-col>
+			</div>
+		  		
+	
 
-		</Row>
-		<Row>
+		  	
+
+
+		  	
+
+
+	</div>
 			<i-col span="24">
 				<common-footer></common-footer>
 			</i-col>		
-		</Row>
-
-	</div>
-	
-
-
 </div>
 
 </template>
 
 <script type="text/javascript">
-
 import axios from 'axios'
 import VueResource from 'vue-resource'
 //header组件
@@ -81,57 +79,33 @@ import MoviesList from '../components/MoviesList'
 import IndexHeaderPic from '../components/IndexHeaderPic'
 //用户模块组件
 import UserMessage from '../components/UserMessage'
-
-
 	export default {
 		data(){ //定义变量
 			return{
 				headerItems:[], //主页推荐
 				newsItems:[], //主页新闻列表
-				movieItems:[] //主页电影列表
+				movieItems:[], //主页电影列表
+				recommendSrc:[],//主页推荐里的图片链接 ?如何同时把movieSrc和movieImg(豆瓣Url数据)的内容都保存进这个数组
+				movieImg:[],
+
 			}
 		},
 		created(){ //created钩子，此时已可以访问到之前不能访问到的数据，但是这时候组件还没被挂载，所以是看不到的
 			this.$http.get('http://localhost:3000/showIndex').then((data)=>{
 				this.headerItems=data.body.data;
-				console.log(data.body.data)
+				//使用map方法过滤出需要的同属性/key数据
+				this.recommendSrc=this.headerItems.map(x=>{return x.recommendSrc})//用于显示banner图片
+				//recommendImg用于保存链接
+				console.log(this.recommendSrc)
 			})
 			this.$http.get('http://localhost:3000/showArticle').then((data)=>{
 				this.newsItems=data.body.data;
-				console.log(data.body.data)
+				
 			})
 			this.$http.get('http://localhost:3000/showRanking').then((data)=>{
 				this.movieItems=data.body.data;
-				console.log(data.body.data)
+				
 			})
-			//	主页推荐
-			// axios.get('http://localhost:3000/showIndex')
-			//   .then((response)=> {
-			//     console.log(response);
-			//     this.headerItems = response.data.data;
-			//   })
-			//   .catch(function (error) {
-			//     console.log(error);
-			//   });
-			// //获取新闻
-			// axios.get('http://localhost:3000/showArticle')
-			//   .then((response)=> {
-			//     console.log(response);
-			//     this.newsItems = response.data.data;
-			//   })
-			//   .catch(function (error) {
-			//     console.log(error);
-			//   });			
-			// //获取所有电影
-			// axios.get('http://localhost:3000/showRanking')
-			//   .then((response)=> {
-			//     console.log(response);
-			//     this.movieItems = response.data.data;
-			//   })
-			//   .catch(function (error) {
-			//     console.log(error);
-			//   });
-
 		},
 		components:{
 			MovieIndexHeader,
@@ -139,29 +113,115 @@ import UserMessage from '../components/UserMessage'
 			NewsList,
 			MoviesList,
 			IndexHeaderPic,
-			UserMessage
+			UserMessage,
 		}
 	}
 </script>
 
 <style type="text/css" scoped>
 .contentMain {
-/*	width: 1160px;
-	margin:0 auto;*/
-min-height: 100 %;
-margin-bottom: -60px;
+	width: 1300px;
+	margin:0 auto;
+}
+/*.inner{
+
+}*/
+h2{
+	font-size: 32px;
+	margin-bottom: 24px;
 }
 .contentLeft{
 	display: inline-block;
-	width: calc(100% - 306px);
+	margin:0 auto;
+	margin-left:95px;
+	/*box-shadow: 0 2px 4px rgba(0, 0, 0, .12), 0 0 6px rgba(0, 0, 0, .04)*/
+}
+.movie-card{ 
+	width: 970px;
+	min-height: 500px;
+
+}	
+.movieList{ /*电影海报块*/
+
+	vertical-align: top;/*重要*//*注意是在海报块中使用而不是在父元素用*/
+	width: 174px;
+	height: 254px;
+	margin: 8px;
+	padding:0 16px 24px 0;
+	display: inline-block;
+	background-color: white;
+	box-shadow: 0 2px 4px rgba(0, 0, 0, .12), 0 0 6px rgba(0, 0, 0, .04)
+}
+.movieList:hover{
+	z-index:2;
+/*	-webkit-box-shadow:0 15px 30px rgba(0,0,0,0.1);
+	box-shadow: 0 15px 30px rgba(0,0,0,0.1);*/
+/*	-webkit-transform:translate3d(0,-3px,0);
+	transform: translate3d(0,-3px,0);*/
+	transform: scale(1.1);
+	transition:all 0.4s;
+	/*重要，	表示所有的属性变化在0.4s的时间段内完成*/
 }
 .contentRight{
+	padding-left: 40px;
+	float: right;
+	width: 330px;
 	display: inline-block;
-	width:306px;
-	float:right;
+	min-height: 574px;
+	/*box-shadow: 0 2px 12px 0 rgba(0, 0, 0, 0.1)	*/
 }
-ul{
-	list-style: none;
+.goods-list:hover{
+	transform: scale(1.1);
+}
+.data-list{
+/*	box-shadow: 0 2px 12px 0 rgba(0, 0, 0, 0.1)*/
+
 }
 
+.headerImg{
+	margin: 0 30px;/*居中*/
+
+}
+  .el-carousel__item h3 {
+    color: #475669;
+    font-size: 14px;
+    opacity: 0.75;
+    line-height: 150px;
+    margin: 0;
+  }
+
+  .el-carousel__item:nth-child(2n) {
+     background-color: #99a9bf;
+     margin:0;
+  }
+  
+  .el-carousel__item:nth-child(2n+1) {
+     background-color: #99a9bf;
+  }
+    .el-row {
+    margin-bottom: 20px;
+    &:last-child {
+      margin-bottom: 0;
+    }
+  }
+  .el-col {
+    border-radius: 4px;
+  }
+  .bg-purple-dark {
+    background: #99a9bf;
+  }
+  .bg-purple {
+    background: #d3dce6;
+  }
+  .bg-purple-light {
+    background: #e5e9f2;
+  }
+  .grid-content {
+    border-radius: 4px;
+    min-height: 36px;
+  }
+  .row-bg {
+    padding: 10px 0;
+    background-color: #f9fafc;
+  }
 </style>

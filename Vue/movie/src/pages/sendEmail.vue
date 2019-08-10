@@ -5,32 +5,33 @@
 	<div>
 		<movie-index-header></movie-index-header>
 	</div>
-	<div class="userMessage">
-		<user-message></user-message>
+
+	<div class="content">
+
+
+			<h3>我发送的信件:</h3>
+			<div class="message-box">
+				<email-list v-for="item in receive_items" :title="item.title" :fromUser="item.fromUser" :context="item.context"></email-list>
+			</div>
+			<br>
+			<h3>我收到的信件:</h3>
+			<div class="edit-message">
+				<email-list v-for="item in send_items" :title="item.title" :fromUser="item.fromUser" :context="item.context"></email-list>
+			</div>
+			<send-talk-box></send-talk-box>
 	</div>
-	<label>收件箱</label>
-	<div>
-		<email-list v-for="item in receive_items" :title="item.title" :fromUser="item.fromUser" :context="item.context"></email-list>
-	</div>
-	<label>发件箱</label>
-	<div>
-		<email-list v-for="item in send_items" :title="item.title" :fromUser="item.fromUser" :context="item.context"></email-list>
-	</div>
-	<send-talk-box></send-talk-box>
-		<common-footer></common-footer>
+
+	<common-footer></common-footer>
 </div>
 </template>
 
 <script>
 import VueResource from 'vue-resource'
-//header组件
 import MovieIndexHeader from '../components/MovieIndexHeader'
-//footer组件
 import CommonFooter from '../components/CommonFooter'
 import UserMessage from '../components/UserMessage'
 import EmailList from '../components/EmailList'
 import SendTalkBox from '../components/SendTalkBox'
-//推荐电影列表组件
 import MoviesList from '../components/MoviesList'
 
 export default {
@@ -50,6 +51,7 @@ export default {
 	},
 	created(){
 		let userId=localStorage._id
+
 		let send_data={
 			token:localStorage.token,
 			user_id:localStorage._id,
@@ -57,14 +59,14 @@ export default {
 		}
 		let receive_data={
 			token:localStorage.token,
-			user_id:localStorage._id
+			user_id:localStorage._id,
 			receive:1
 		}
 		if(userId){
 			this.$http.post('http://localhost:3000/users/showEmail',send_data)
 			.then((data)=>{
 				if(data.body.status==1){
-					alert(data.body.message)
+					// alert(data.body.message)
 				}else{
 					this.send_items=data.body.data;
 				}
@@ -73,19 +75,17 @@ export default {
 			this.$http.post('http://localhost:3000/users/showEmail',receive_data)
 			.then((data)=>{
 				if(data.body.status==1){
-					alert(data.body.message)
+					// alert(data.body.message)
 				}else{
 					this.receive_items=data.body.data;
 				}
 				console.log(data.body.data)
 			})
 		}else{
-			alert("用户信息错误 ")
+			alert("请先登录 ")
 		}
 	},
-	methods:{
-		
-	}
+
 }
 </script>
 
@@ -93,12 +93,39 @@ export default {
 .box {
 
 }
-.container {
+.content {
+	min-height: 590px;
+
+	width: 1143px;
+	margin:0 auto;
+	margin-top: 30px;
+}
+.message-box{
 
 }
-.userMessage{
-
+.message{
+	width: 360px;
+	height: 162px;
+	padding: 20px;
+	margin:20px 20px 0 0;
+	background-color: #f4f5f7;
+	overflow: hidden;
+	display: inline-block;
+	border-radius: 8px;
+	border:1px solid #e5e9ef;
 }
+.message:hover{
+	z-index:2;
+/*	-webkit-box-shadow:0 15px 30px rgba(0,0,0,0.1);
+	box-shadow: 0 15px 30px rgba(0,0,0,0.1);*/
+/*	-webkit-transform:translate3d(0,-3px,0);
+	transform: translate3d(0,-3px,0);*/
+	transform: scale(1.1);
+	transition:all 0.4s;
+	/*重要，	表示所有的属性变化在0.4s的时间段内完成*/
+}
+
+
 </style>
 
 
