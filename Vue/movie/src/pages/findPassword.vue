@@ -41,7 +41,7 @@
 </template>
 
 <script type="text/javascript">
-import VueResource from 'vue-resource'
+import axios from 'axios'
 //header组件
 import MovieIndexHeader from '../components/MovieIndexHeader'
 	export default {
@@ -60,12 +60,12 @@ import MovieIndexHeader from '../components/MovieIndexHeader'
 		},
 		methods:{
 			checkUser:function(event){
-				this.$http.post('http://localhost:3000/users/findPassword',{username:this.username,userMail:this.userMail,userPhone:this.userPhone})
+				axios.post('/users/findPassword',{username:this.username,userMail:this.userMail,userPhone:this.userPhone})
 				.then((data)=>{
-					if(data.body.status==1){
-						alert(data.body.message)
+					if(data.data.status==1){
+						alert(data.data.message)
 					}else{
-						alert(data.body.message)
+						alert(data.data.message)
 						this.showRePassword=true
 						this.showUserInfo=false
 						console.log(this.showRePassword)
@@ -73,14 +73,14 @@ import MovieIndexHeader from '../components/MovieIndexHeader'
 				})
 			},
 			changeUserPassword:function(event){
-				this.$http.post('http://localhost:3000/users/findPassword',{
+				axios.post('/users/findPassword',{
 					username:this.username,userMail:this.userMail,userPhone:this.userMail,userPhone:this.userPhone,repassword:this.repassword
 				})
-				.then((data)=>{
-					if(data.body.status==1){
-						alert(data.body.message)
+				.then((res)=>{
+					if(res.data.status==1){
+						alert(res.data.message)
 					}else{
-						alert(data.body.message)
+						alert(res.data.message)
 					}
 				})
 			},

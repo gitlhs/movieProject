@@ -60,7 +60,6 @@
 </template>
 
 <script type="text/javascript">
-    import VueResource from 'vue-resource'
 	import axios from 'axios'
 	import MovieIndexHeader from '../components/MovieIndexHeader'
 	import CommonFooter from '../components/CommonFooter'
@@ -83,9 +82,9 @@
 			//初始化后,将路由传过来的电影id封装起来，用来获取此电影内容
 			this.movie_id=this.$route.query.id
 			let movie_id=this.$route.query.id
-			this.$http.post('http://localhost:3000/movie/detail',{movie_id:this.movie_id}).then((data)=>{ 
+			axios.post('/movie/detail',{movie_id:this.movie_id}).then((data)=>{
             //左边的movie_id是request参数，右边的为本组件的数据源
-				this.detail=data.body.data;
+				this.detail=data.data.data;
                 console.log(this.detail)
 			})
 
@@ -93,16 +92,16 @@
 		methods:{
 			//点赞
 			support:function(event){
-				this.$http.post('http://localhost:3000/users/support',{movie_id:this.movie_id})
+				this.axios.post('/users/support',{movie_id:this.movie_id})
 				.then((data1)=>{
-					let data_temp=data1.body
+					let data_temp=data1.data
 					let that=this
 
 					if(data_temp.status===0){ //即点赞请求成功了
                         //在单击点赞按钮且请求成功后将原本的点赞数据+1
-						this.$http.post('http://localhost:3000/movie/showNumber',{movie_id:this.movie_id})
+						this.axios.post('/movie/showNumber',{movie_id:this.movie_id})
 						.then((data2)=>{
-							that.detail[0].movieNumSuppose=data2.body.data
+							that.detail[0].movieNumSuppose=data2.data.data
 
 						}) 
 					}else{
@@ -112,15 +111,15 @@
 			},
 			//电影下载
 			movieDownload:function(event){
-			axios.post('http://localhost:3000/users/download', {
+			axios.post('/users/download', {
 			    movie_id: this.movie_id  
 			  })
-			  .then(function (response) {
+			  .then((res)=>{
 
-			    if(response.status==1){
-			    	alert(response.message)
+			    if(res.status==1){
+			    	alert(res.message)
 			    }else{
-                    alert('下载地址：'+response.data.data)
+                    alert('下载地址：'+res.data.data)
                     // axios.post('http://localhost:3000/movie/showDownloadNumber',{movie_id:this.movie_id})
                     //     .then((data3)=>{
                     //         console.log(data3.body.data)

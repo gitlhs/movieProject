@@ -19,7 +19,7 @@ router.get('/showIndex',function(req,res,next){
 	})
 });
 
-//显示排行榜 【成功】
+//显示排行榜 【成功】其实就是查找所有的电影条目
 router.get('/showRanking',function(req,res,next){
 	movie.find(function(err,getMovies){
 		res.json({status:0,message:'显示排行榜成功',data:getMovies})
@@ -35,11 +35,12 @@ router.get('/showArticle',function(req,res,next){
 
 //显示文章内容【成功】
 router.post('/articleDetail',function(req,res,next){
+			console.log(req.body)
 	if(! req.body.article_id){
-		res.json({status:1,message:'文章id出错'})
+		return res.json({status:1,message:'文章id出错'})
 	}
 	article.findByArticleId(req.body.article_id,function(err,getArticle){
-		res.json({status:0,message:'获取成功',data:getArticle})
+		return res.json({status:0,message:'获取成功',data:getArticle})
 	})
 });
 

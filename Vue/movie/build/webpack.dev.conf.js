@@ -1,3 +1,4 @@
+//开发环境版本
 'use strict'
 const utils = require('./utils')
 const webpack = require('webpack')
@@ -46,6 +47,7 @@ const devWebpackConfig = merge(baseWebpackConfig, {
   },
   plugins: [
     new webpack.DefinePlugin({
+      BASE_URL:"'http://localhost:3000'" ,
       'process.env': require('../config/dev.env')
     }),
     new webpack.HotModuleReplacementPlugin(),

@@ -10,7 +10,7 @@ var comment = new mongoose.Schema({
 })
 
 comment.statics.findByMovieId = function(m_id,callBack){
-	this.find({movie_id:m_id,check:true},callBack);
+	this.find({movie_id:m_id},callBack);
 };
 
 comment.statics.findAll = function(callBack){

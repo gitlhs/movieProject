@@ -102,7 +102,7 @@ router.post('/movieDel',async function(req,res,next){
 		res.json({status:1,message:check.message})
 	}
 });
-//修改电影条目 [需要写模型里的mongoose更新方法]
+//修改电影条目 [需要写模型里的mongoose更新方法] 前端ajax请求方式参考注册页面和注册api的交互
 router.post('/movieUpdate',async function(req,res,next){
 	if(! req.body.movieId){
 		return res.json({status:1,message:"电影id传递失败"})

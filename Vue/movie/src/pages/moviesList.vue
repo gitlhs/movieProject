@@ -18,10 +18,10 @@
 			
 
 	</div>
-
+<!-- 
 			<div>
 				<common-footer></common-footer>	
-			</div>
+			</div> -->
 </div>
 </template>
 
@@ -48,7 +48,7 @@ export default {
 	},
 	created(){
 	//主页推荐
-	axios.get('http://localhost:3000/showRanking') //该API还未实现
+	axios.get('/showRanking') //该API还未实现
 	  .then((response)=> {
 	    console.log(response);
 	    this.movieItems = response.data.data;

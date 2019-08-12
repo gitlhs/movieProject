@@ -28,7 +28,7 @@
 <style type="text/css" scoped>
 .m_img{
 	width: 154.8px;
-	min-height: 206.39px;
+	height: 206.39px; /*之前写成min-height捂脸*/
 	display: block;
 	border-radius: 5px;
 }

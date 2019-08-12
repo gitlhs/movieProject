@@ -8,7 +8,7 @@
   @select="handleSelect"
   background-color="#515a6e"
   text-color="#fff"
-  active-text-color="#ffd04b" router>
+  active-text-color="#99ccff" router>
 	<el-menu-item index="/">网站主页</el-menu-item><!-- 注意el-menu标签打开router属性，将default-active绑定为$route.path -->
   <el-menu-item index="/movieList">全部电影</el-menu-item>
   <el-menu-item index="/sendEmail">站内信</el-menu-item>

@@ -11,7 +11,7 @@ var user = new mongoose.Schema({
 	userPower:Number, //用户权限等级
 	userStop:Boolean //是否封停
 })
-//the searching ways of user
+//mongoose模型对象的数据库查询方法find
 user.statics.findAll = function(callBack){
 	this.find({},callBack);
 };

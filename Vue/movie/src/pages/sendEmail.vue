@@ -21,12 +21,12 @@
 			<send-talk-box></send-talk-box>
 	</div>
 
-	<common-footer></common-footer>
+<!-- 	<common-footer></common-footer> -->
 </div>
 </template>
 
 <script>
-import VueResource from 'vue-resource'
+import axios from 'axios'
 import MovieIndexHeader from '../components/MovieIndexHeader'
 import CommonFooter from '../components/CommonFooter'
 import UserMessage from '../components/UserMessage'
@@ -63,23 +63,23 @@ export default {
 			receive:1
 		}
 		if(userId){
-			this.$http.post('http://localhost:3000/users/showEmail',send_data)
+			axios.post('/users/showEmail',send_data)
 			.then((data)=>{
-				if(data.body.status==1){
+				if(data.data.status==1){
 					// alert(data.body.message)
 				}else{
-					this.send_items=data.body.data;
+					this.send_items=data.data.data;
 				}
-				console.log(data.body.data)
+				console.log(data.data.data)
 			})
-			this.$http.post('http://localhost:3000/users/showEmail',receive_data)
+			axios.post('/users/showEmail',receive_data)
 			.then((data)=>{
-				if(data.body.status==1){
+				if(data.data.status==1){
 					// alert(data.body.message)
 				}else{
-					this.receive_items=data.body.data;
+					this.receive_items=data.data.data;
 				}
-				console.log(data.body.data)
+				console.log(data.data.data)
 			})
 		}else{
 			alert("请先登录 ")

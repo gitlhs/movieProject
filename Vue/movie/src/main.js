@@ -6,6 +6,7 @@ import router from './router'
 import axios from 'axios'
 import iView from 'iview';
 import 'iview/dist/styles/iview.css';
+import VueResource from 'vue-resource';
 
 import ElementUI from 'element-ui';
 import 'element-ui/lib/theme-chalk/index.css';
@@ -25,3 +26,5 @@ new Vue({
   components: { App },
   template: '<App/>'
 })
+
+axios.defaults.baseURL = BASE_URL;

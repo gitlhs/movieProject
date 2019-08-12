@@ -35,7 +35,7 @@
 					<input v-model="password" class="edit" type="password" name="">
 					<label>输入新密码</label>
 					<input v-model="repassword" class="edit" type="password" name="">
-					<button @click=changeUserPassword() class="btn">提交修改</button>
+					<button @click=changeUserPassword() class="btn submit">提交修改</button>
 				</div>
 			</div>
 			 <el-divider></el-divider>
@@ -43,12 +43,13 @@
 				<router-link to="/sendEmail">
 					<button class="btn">站内邮件</button>
 				</router-link>
-				<Icon type="ios-mail-open-outline" size="32" />
+				<i class="el-icon-message"></i>
+				
 
 			</div>
 	
 </div>
-	<common-footer></common-footer>
+<!-- 	<common-footer></common-footer> -->
 
 </div>
 
@@ -56,7 +57,7 @@
 
 
 <script type="text/javascript">
-import VueResource from 'vue-resource'
+import axios from 'axios'
 
 import MovieIndexHeader from '../components/MovieIndexHeader'
 import CommonFooter from '../components/CommonFooter'
@@ -83,19 +84,19 @@ import UserMessage from '../components/UserMessage'
 		created(){
 			let userId=this.$route.query.id
 			if(userId){
-				this.$http.post('http://localhost:3000/showUser',{user_id:userId})
+				axios.post('/showUser',{user_id:userId})
 				.then((data)=>{
-					if(data.body.status==1){
-						alert(data.body.message)
+					if(data.data.status==1){
+						alert(data.data.message)
 					}else{
-						this.detail=data.body.data;
-						if(data.body.data.userStop){
+						this.detail=data.data.data;
+						if(data.data.data.userStop){
 							this.userStatus="用户已经被封停"
 						}else{
 							this.userStatus="用户状态正常"
 						}
 					}
-					console.log(data.body.data)
+					console.log(data.data.data)
 				})
 			}else{
 				alert('用户信息错误')
@@ -109,14 +110,14 @@ import UserMessage from '../components/UserMessage'
 			changeUserPassword(event){
 				let token=localStorage.token
 				let user_id=localStorage._d
-				this.$http.post('http://localhost:3000/users/findPassword',{
+				axios.post('/users/findPassword',{
 					token:token,user_id:user_id,repassword:this.repassword,password:this.password
 				})
 				.then((data)=>{
-					if(data.body.status==1){
-						alert(data.body.message)
+					if(data.data.status==1){
+						alert(data.data.message)
 					}else{
-						alert(data.body.message)
+						alert(data.data.message)
 						// this.$router.go(-1)
 					}
 				})
@@ -126,6 +127,11 @@ import UserMessage from '../components/UserMessage'
 </script>
 
 <style type="text/css" scoped>
+.el-icon-message{
+	font-size: 36px;
+	vertical-align: top;
+	margin-left: 10px;
+}
 .container {
 
 }
@@ -156,6 +162,9 @@ import UserMessage from '../components/UserMessage'
     border: 1px solid grow;
     border-radius: 4px;
     outline: none;
+}
+.submit{
+	margin-top: 15px;
 }
   .btn:hover{
     background-color: #e6e6e6;

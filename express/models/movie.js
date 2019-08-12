@@ -6,7 +6,7 @@ var movie = new mongoose.Schema({
 	movieImg:String,
 	movieVideo:String,
 	movieDownload:String,
-	movieTime:String,
+	movieTime:Date,
 	movieNumSuppose:Number, // xxxx 这里不能写String
 	movieNumDownload:Number, // xxxx 这里不能写String
 	movieMainPage:Boolean,

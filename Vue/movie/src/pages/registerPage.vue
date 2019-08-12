@@ -71,12 +71,12 @@
 						userMail:this.userMail,
 						userPhone:this.userPhone
 					}
-					axios.post('http://localhost:3000/users/register',sendDate)
-					.then((response)=>{
-						if(response.data.status==1){ //注册失败
-							alert(response.data.message)
+					axios.post('/users/register',sendDate)
+					.then((res)=>{
+						if(res.data.status==1){ //注册失败
+							alert(res.data.message)
 						}else{
-							alert(response.data.message) //成功
+							alert(res.data.message) //成功
 							this.$router.replace('/loginPage')
 						}
 					})

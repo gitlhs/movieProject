@@ -3,11 +3,10 @@
 <el-menu
   class="el-menu-demo"
   mode="horizontal"
-  @select="handleSelect"
+  
   background-color="#515a6e"
   text-color="#fff" router>
 	<el-menu-item index="/">返回主页</el-menu-item><!-- 注意el-menu标签打开router属性，将default-active绑定为$route.path -->
-  <user-message></user-message>
 		
 </el-menu>
 </template>

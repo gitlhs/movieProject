@@ -33,4 +33,8 @@
 	 margin-bottom: 10px;
 	 font-size: 16px;
 }
+.goods-list-link{/* 修改短评里文字的长度*/
+	display: block;
+	margin-right: 40px;
+}
 </style>

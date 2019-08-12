@@ -9,7 +9,7 @@
 		<br>
 		<h3>发布时间：{{detail.articleTime}}</h3>
 		<br>
-		<div class="contentText">文章内容：{{detail.articleContext}}</div>
+		<div class="contentText">文章内容：&nbsp{{detail.articleContext}}</div>
 		<br>
 		网友评论：
 		<br>
@@ -17,14 +17,12 @@
     	<comment v-bind:movie_id="article_id"></comment>
 
     </div>
-			<common-footer></common-footer>
+			<!-- <common-footer></common-footer> -->
 </div>
 
 </template>
 
 <script type="text/javascript">
-
-	import VueResource from "vue-resource"
 	import axios from 'axios'
 	import MovieIndexHeader from '../components/MovieIndexHeader'
 	import CommonFooter from '../components/CommonFooter'
@@ -46,12 +44,11 @@
 		created(){
 			this.article_id=this.$route.query.id
 			
-			this.$http.post('http://localhost:3000/articleDetail',{
+			axios.post('/articleDetail',{
 				article_id:this.article_id
 			})
 			.then((data)=>{
-				console.log(data)
-				this.detail=data.body.data[0];
+				this.detail=data.data.data[0];
 				this.detail.articleTime=new Data(parseInt(this.detail.articleTime)).toLocaleString();
 			})
 

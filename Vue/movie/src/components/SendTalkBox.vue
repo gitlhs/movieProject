@@ -39,7 +39,7 @@ import	VueResource from 'vue-resource'
 					title:this.title,
 					context:this.context
 				}
-				this.$http.post('http://localhost:3000/users/sendEmail',send_data)
+				this.$http.post('/users/sendEmail',send_data)
 				.then((data)=>{
 					if(data.body.status==1){
 						alert(data.body.message)

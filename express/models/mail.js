@@ -3,8 +3,8 @@
 var mongoose = require('../common/db');
 
 var mail = new mongoose.Schema({
-	fromUser:String,
-	toUser:String,
+	fromUser:String,//id
+	toUser:String,//id
 	title:String,
 	context:String
 })

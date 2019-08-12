@@ -28,7 +28,7 @@
 <script type="text/javascript">
 //header组件
 import MovieIndexHeader from '../components/MovieIndexHeader'
-import VueResource from 'vue-resource'
+import axios from 'axios'
 	export default {
 		data(){
 			return{
@@ -41,20 +41,20 @@ import VueResource from 'vue-resource'
 		},
 		methods:{
 			userLogin:function(event){
-				this.$http.post('http://localhost:3000/users/login',{
+				axios.post('/users/login',{
 					username:this.username,password:this.password
 				})
 				.then((data)=>{
-					if(data.body.status==1){
-						alert(data.body.message)
+					if(data.data.status==1){
+						alert(data.data.message)
 					}else{
 						let save_token={
-							token:data.body.data.token,
+							token:data.data.data.token,
 							username:this.username
 						}
-						localStorage.setItem('token',data.body.data.token);
-						localStorage.setItem('username',data.body.data.user[0].username);
-						localStorage.setItem('_id',data.body.data.user[0]._id);
+						localStorage.setItem('token',data.data.data.token);
+						localStorage.setItem('username',data.data.data.user[0].username);
+						localStorage.setItem('_id',data.data.data.user[0]._id);
 						this.$router.replace('/')
 					}
 				})

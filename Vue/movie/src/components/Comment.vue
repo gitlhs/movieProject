@@ -19,7 +19,7 @@
 
 <script type="text/javascript">
 
-import VueResource from 'vue-resource'
+import axios from 'axios'
 export default {
 		props:['movie_id'],
 		data(){
@@ -31,12 +31,12 @@ export default {
 		},
 		created(){
 			//初始化后用 传来的电影id去请求（对应的评论）数据 并填入网页
-			this.$http.post('http://localhost:3000/movie/comment',{ //api正常
+			axios.post('/movie/comment',{ //api正常
 				movie_id:this.movie_id})
 			.then((data)=>{
 				console.log(data)
-				if(data.body.status==0){
-					this.items=data.body.data
+				if(data.data.status==0){
+					this.items=data.data.data
 					console.log('获取到数据了')
 				}else{
 					console.log('获取评论失败或该电影评论不存在')
@@ -58,9 +58,9 @@ export default {
 							context:this.context,
 						}
 					}
-					this.$http.post('http://localhost:3000/users/postComment',send_data)
+					axios.post('/users/postComment',send_data)
 					.then((data)=>{
-						alert(data.body.message)
+						alert(data.data.message)
 					})
 				}
 			},

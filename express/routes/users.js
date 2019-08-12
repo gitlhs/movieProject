@@ -1,7 +1,7 @@
 var express = require('express');
 var router  = express.Router();
 
-//本文件url皆由/user开头，配置位置在app.js里面
+//本文件url皆由/usersssssssssssss开头，配置位置在app.js里面
 //
 var user    = require('../models/user');
 var crypto  = require('crypto'); //加密的中间件
@@ -101,6 +101,7 @@ router.post('/postComment',function(req,res,next){
 	})
 });
 //点赞 API 【成功】 [点赞一直失败， 因为movie表结构的数据类型应该为number,且supportMovie为数组，应该+[0]]
+//完善ing，限制一个用户点赞一次
 router.post('/support',function(req,res,next){
 
 		if(!req.body.movie_id){
@@ -207,8 +208,6 @@ router.post('/sendEmail',function(req,res,next){
 				var NewEmail = new mail({fromUser:req.body.user_id,toUser:toUser[0]._id,title:req.body.title,context:req.body.context})
 				NewEmail.save(function(){
 					res.json({status:0,message:"发送成功"})
-				
-			
 		})
 	}else{
 		res.json({status:1,message:"您发送的对象不存在"})
@@ -220,15 +219,16 @@ router.post('/sendEmail',function(req,res,next){
 });
 //show Email 【成功】【用户登录错误,callBack写成callback，渣渣. ps：data:sendMail也写错.ps:判定token是否正确的逻辑写错，不能加！，渣渣作者】
 router.post('/showEmail',function(req,res,next){
+	console.log(req.body)
 	if(! req.body.token){
-		res.json({status:1,message:"用户登录状态错误"})
+		return res.json({status:1,message:"用户登录状态错误"})
 	}
 	if(! req.body.user_id){
-		res.json({status:1,message:"用户登录状态出错"})
+		return res.json({status:1,message:"用户登录状态出错"})
 	}
 	if(! req.body.receive){  //receive获取发送的内容/收到的内容
 		//receive参数为1时是发送的内容，为2时是收到的内容
-		res.json({status:1,message:"参数出错"})
+		return res.json({status:1,message:"获取信件失败，您无信件或者参数出错"})
 	}
 	if(req.body.token == getMD5Password(req.body.user_id)){
 		if(req.body.receive == 1){ //receive为1时获取发送的内容
@@ -236,7 +236,7 @@ router.post('/showEmail',function(req,res,next){
 				console.log(sendMail)
 				return res.json({status:0,message:"获取成功",data:sendMail})
 			})
-		}else{ //receive为2时获取收到的信内容
+		}else{ //receive为0时获取收到的信内容
 			mail.findByToUserId(req.body.user_id,function(err,receiveMail){
 				return res.json({status:0,message:'获取成功',data:receiveMail})
 			})
